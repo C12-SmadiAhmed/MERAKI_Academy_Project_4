@@ -16,10 +16,10 @@ export const registerContext=createContext()
 function App() {
   const [token, settoken] = useState(localStorage.getItem('token')|| '')
 const [loggedin, setloggedin] = useState(false)
-const [firstName,setfirstName1]= useState("")
+const [firstName1,setfirstName1]= useState("")
   return (
     <>
-    <registerContext.Provider value={{token,settoken,loggedin,setloggedin,firstName,setfirstName1}}>
+    <registerContext.Provider value={{token,settoken,loggedin,setloggedin,firstName1,setfirstName1}}>
     <Routes>
     <Route path="/" element={<HomePage/>}/>
     <Route path="/Shopping" element={<CarsforSale/>}/>
