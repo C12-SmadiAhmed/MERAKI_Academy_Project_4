@@ -1,7 +1,9 @@
 const categoriesModel=require("../models/Categories")
 
 const categories=(req,res)=>{
-const {carCategorie ,carName,carImage}=req.body
+const {carCategorie ,carName}=req.body
+
+const carImage=req.file.path
 
 const newCategorie= new categoriesModel({carCategorie ,carName,carImage})
 
@@ -19,15 +21,14 @@ newCategorie.save().then((result)=>{
     })
 
 }
-const gitCarByCategories=()=>{
-const categorie= req.query.categorie
+const gitCarByCategories=(req,res)=>{
+const categorie= req.query.carCategorie
 categoriesModel.find({carCategorie:categorie}).exec()
 .then((posts) => {
   if (posts.length) {
     res.status(200).json({
       success: true,
       message: `all the cars in the categorie`,
-      userId: userId,
       post: posts,
     });
   } else {
