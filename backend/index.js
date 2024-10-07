@@ -12,6 +12,7 @@ const usersRouter = require("./routes/Users")
 const rolesRouter=require("./routes/Roles")
 const postRouter=require("./routes/Posts")
 const admiPostRouter=require("./routes/AdminPosts")
+const categorieRouter=require("./routes/Category")
 
 app.use(cors());
 app.use(express.json());
@@ -20,6 +21,7 @@ app.use("/users", usersRouter);
 app.use("/roles", rolesRouter);
 app.use("/posts", postRouter);
 app.use("/Adminposts", admiPostRouter);
+app.use("/category", categorieRouter);
 
 
 // Handles any other endpoints [unassigned - endpoints]
