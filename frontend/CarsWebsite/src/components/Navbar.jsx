@@ -5,7 +5,7 @@ import { useContext } from 'react'
 const Navbar = () => {
 const {token ,firstName1,settoken,setloggedin }=useContext(registerContext)
 const navagite=useNavigate()
-console.log(firstName1)
+
 const logOutButton=()=>{
   settoken(null)
   setloggedin(false)
