@@ -77,9 +77,9 @@ button:hover {
   background-color: #e68a00; 
 }
 #logo{
-  width: 150px; /* Adjust the size of the logo */
+  width: 150px; 
   height: 100px;
-  margin-right: 20px; /* Space between logo and links */
+  margin-right: 20px; 
 }
 #homephoto{
 width: 180vh;
