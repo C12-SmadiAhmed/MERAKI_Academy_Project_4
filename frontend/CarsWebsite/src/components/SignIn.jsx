@@ -2,6 +2,17 @@ import React, { useContext ,useState} from 'react'
 import { registerContext } from '../App'
 import { Navigate, useNavigate } from 'react-router-dom'
 import axios from "axios"
+import {
+  MDBBtn,
+  MDBContainer,
+  MDBRow,
+  MDBCol,
+  MDBCard,
+  MDBCardBody,
+  MDBInput,
+  MDBIcon,
+  MDBCheckbox
+}from 'mdb-react-ui-kit'
 
 const SignIn = () => {
 const navgite=useNavigate()
@@ -31,7 +42,7 @@ axios.post("http://localhost:5000/users/login", body ,).then((result)=>{
 })}
 
   return (
-    <div>
+     <div>
       <h3>SignIn</h3>
       <input placeholder='Your Email' onChange={(e)=>{ setemail(e.target.value) }}></input>
       <input placeholder='Your Password' onChange={(e)=>{ setpassword(e.target.value) }}></input>
@@ -40,10 +51,8 @@ axios.post("http://localhost:5000/users/login", body ,).then((result)=>{
       <button onClick={()=>{
         navgite("/Register")
       }}>Create account</button>
-
-
-
-    </div>
+    </div> 
+   
   )
 }
 

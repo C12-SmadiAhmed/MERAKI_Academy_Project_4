@@ -73,3 +73,20 @@ button:hover {
 width: 180vh;
 height: 80vh;
 }
+
+.carcategory{
+  display: grid;
+  grid-template-columns: repeat(5,1fr);
+  gap : 15px ; 
+  padding : 20px 
+}
+
+.carcategory img {
+  width: 200px;
+  height: 120px;
+}
+@media (min-width: 1025px) {
+  .h-custom-2 {
+    height: 100%;
+    }
+  }
