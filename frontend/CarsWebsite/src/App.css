@@ -85,8 +85,86 @@ height: 80vh;
   width: 200px;
   height: 120px;
 }
-@media (min-width: 1025px) {
-  .h-custom-2 {
-    height: 100%;
-    }
-  }
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  
+}
+
+.register-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.register-card{
+  display: flex;
+  gap: 20px;
+  border: 2px solid #d27219; 
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.login-card {
+  display: flex;
+  gap: 20px;
+  border: 2px solid #1976d2; 
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.image-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.car-image {
+  width: 100%;
+  height: auto;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+#Popularcategoris{
+  display: flex ;
+  font-size: xx-large;
+}
+
+.categoryButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; 
+  justify-content: left; 
+  margin: 20px; 
+  
+}
+
+.categoryButton {
+  background-color: #4c5baf; 
+  border: none; 
+  color: white; 
+  padding: 15px 25px; 
+  text-align: center; 
+  text-decoration: none; 
+  display: inline-block; 
+  font-size: 16px; 
+  border-radius: 5px; 
+  cursor: pointer; 
+  transition: background-color 0.3s, transform 0.2s; /
+}
+
+.categoryButton:hover {
+  background-color: #1d3ada; 
+  transform: scale(1.05); 
+}
+
+.categoryButton:focus {
+  outline: none; 
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5); 
+}
+.css-1lt5qva-MuiCardContent-root {
+  padding: 80px;
+} 

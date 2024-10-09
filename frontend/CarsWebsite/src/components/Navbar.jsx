@@ -1,13 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { registerContext } from '../App'
 import { useContext } from 'react'
+import SignIn from './SignIn'
+
 const Navbar = () => {
 const {token ,firstName1,settoken,setloggedin }=useContext(registerContext)
 const navagite=useNavigate()
 
+
 const logOutButton=()=>{
   settoken(null)
+  localStorage.clear()
   setloggedin(false)
   navagite("/")
 }
@@ -21,8 +25,10 @@ const logOutButton=()=>{
          <h2><Link to={"/sell-your-car"}>Sell your car</Link></h2>
          {token ? (<><h2>Hello {firstName1}</h2>  
          <button id="logout" onClick={logOutButton}>Logout</button></>):(
-          <h2><Link to={"/Signin"}>Sign in</Link></h2> )
-        }
+          <>
+          <h2><Link to={"/Signin"}>Sign in</Link></h2> 
+          </>
+        )}
         
     </div>
     </>

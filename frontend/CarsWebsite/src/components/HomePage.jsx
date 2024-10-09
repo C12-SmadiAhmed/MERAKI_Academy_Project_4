@@ -30,18 +30,18 @@ const showCategory=(category)=>{
         <Navbar/>
       <img id="homephoto" src="./src/assets/home-car-wallpapers.jpg"></img>
     </div>
-    <h2>Popular categoris</h2>
-    <div>
-<button onClick={() => showCategory('Electric')}>Electric</button>
-<button onClick={() => showCategory('Hybrid')}>Hybrid</button>
-<button onClick={() => showCategory('SUV')}>SUV</button>
-<button onClick={() => showCategory('Sedan')}>Sedan</button>
-<button onClick={() => showCategory('PickupTruck')}>Pickup Truck</button>
-<button onClick={() => showCategory('Hatchback')}>Hatchback</button>
- <button onClick={() => showCategory('Luxury')}>Luxury</button>
-<button onClick={() => showCategory('Coupe')}>Coupe</button>
-<button onClick={() => showCategory('Crossover')}>Crossover</button>
-<button onClick={() => showCategory('Van')}>Van</button>
+    <h2 id="Popularcategoris">Popular categoris</h2>
+    <div className='categoryButtons'>
+<button className='categoryButton' onClick={() => showCategory('Electric')}>Electric</button>
+<button className='categoryButton' onClick={() => showCategory('Hybrid')}>Hybrid</button>
+<button className='categoryButton' onClick={() => showCategory('SUV')}>SUV</button>
+<button className='categoryButton' onClick={() => showCategory('Sedan')}>Sedan</button>
+<button className='categoryButton' onClick={() => showCategory('PickupTruck')}>Pickup Truck</button>
+<button className='categoryButton' onClick={() => showCategory('Hatchback')}>Hatchback</button>
+ <button className='categoryButton' onClick={() => showCategory('Luxury')}>Luxury</button>
+<button className='categoryButton' onClick={() => showCategory('Coupe')}>Coupe</button>
+<button className='categoryButton' onClick={() => showCategory('Crossover')}>Crossover</button>
+<button className='categoryButton' onClick={() => showCategory('Van')}>Van</button>
  </div>
 <div className="carcategory">
 {category.map((elem, i) => 
