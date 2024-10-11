@@ -6,9 +6,9 @@ import { FaFaceGrinWink } from "react-icons/fa6"
 const SellYourCar = () => {
 const [carCondtion, setcarCondtion] = useState("")
 const [made, setmade] = useState("")
-const [model, setmodel] = useState("")
-const [price, setprice] = useState("")
-const [range, setrange] = useState("")
+const [model, setmodel] = useState(0)
+const [price, setprice] = useState(0)
+const [range, setrange] = useState(0)
 const [exteriorColor, setexteriorColor] = useState("")
 const [interiorColor, setinteriorColor] = useState("")
 const [drivetrain, setdrivetrain] = useState("")
@@ -23,6 +23,10 @@ const [author, setauthor] = useState("")
 const [location, setlocation] = useState("")
 const [sellersNote, setsellersNote] = useState("")
 const [carImage, setcarImage] = useState("")
+
+const token =localStorage.getItem('token')
+
+const userId= token ? JSON.parse(atob(token.split('.')[1])).userId : null ; 
 
 const SubmitButton=()=>{
 setcarCondtion(carCondtion)
@@ -61,22 +65,27 @@ const body={
   Exterior : Exterior , 
   Safety : Safety , 
   Seating: Seating , 
-  author: author , 
+  author: userId , 
   location: location , 
   carImage: carImage , 
   sellersNote:sellersNote , 
+  
 }
+console.log(body)
+
 
 axios.post("http://localhost:5000/posts/createpost"
-  , body
-).then((result)=>{
+  , body ,{
+    headers: {
+      Authorization: `Bearer ${token}`
+    } }).then((result)=>{
   console.log(result)
   console.log(result.status)
   if (result.status===201){
     console.log("done")
   };
 }).catch((err)=>{
-  console.log(err)
+  console.log(err.response.data.err)
 })
 
 }
@@ -96,9 +105,9 @@ axios.post("http://localhost:5000/posts/createpost"
  <div>
   <input placeholder=' Your Car Condtion' onChange={(e)=>{setcarCondtion(e.target.value)}} />
   <input placeholder='Name of your Car' onChange={(e)=>{setmade(e.target.value)}} />
-  <input placeholder='Model of your Car' onChange={(e)=>{setmodel(e.target.value)}}/> 
-  <input placeholder='Your estimated Price' onChange={(e)=>{setprice(e.target.value)}}/>
-  <input placeholder='Range for Km the car ' onChange={(e)=>{setrange(e.target.value)}}/>
+  <input placeholder='Model of your Car' onChange={(e)=>{setmodel(Number(e.target.value))}}/> 
+  <input placeholder='Your estimated Price' onChange={(e)=>{setprice(Number(e.target.value))}}/>
+  <input placeholder='Range for Km the car ' onChange={(e)=>{setrange(Number(e.target.value))}}/>
   <input placeholder='Exterior Color' onChange={(e)=>{setexteriorColor(e.target.value)}}/>
   <input placeholder='Interior Color' onChange={(e)=>{setinteriorColor(e.target.value)}}/>
   <input placeholder='Drive Train' onChange={(e)=>{setdrivetrain(e.target.value)}}/>
@@ -109,7 +118,7 @@ axios.post("http://localhost:5000/posts/createpost"
   <input placeholder='Exterior' onChange={(e)=>{setExterior(e.target.value)}}/>
   <input placeholder='Safety' onChange={(e)=>{setSafety(e.target.value)}}/>
   <input placeholder='Seating' onChange={(e)=>{setSeating(e.target.value)}}/>
-  <input placeholder=' Your Location' onChange={(e)=>{setSeating(e.target.value)}}/>
+  <input placeholder=' Your Location' onChange={(e)=>{setlocation(e.target.value)}}/>
   <input placeholder='Car Images' onChange={(e)=>{setcarImage(e.target.value)}}/>
   <input placeholder='Seller sNote' onChange={(e)=>{setsellersNote(e.target.value)}}/>
 <button onClick={SubmitButton}>Submit</button>
