@@ -26,7 +26,7 @@ const showCategory=(category)=>{
 
   return (
     <>
-    <div>
+    <div className='homepage'>
         <Navbar/>
       <img id="homephoto" src="./src/assets/home-car-wallpapers.jpg"></img>
     </div>
