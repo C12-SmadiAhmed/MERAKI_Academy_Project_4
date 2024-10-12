@@ -167,7 +167,6 @@ axios.post("http://localhost:5000/posts/createpost"
 
 
 
-
   return (
     <>
     <h1 id='sell-your-car-title'>Sell Your Car with us today </h1>
