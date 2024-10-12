@@ -30,7 +30,7 @@ axios.post("http://localhost:5000/users/login", body ,).then((result)=>{
   onClose()
 
 }).catch((err)=>{
-  console.log(err.response.data.message)
+  console.log(err)
 })}
 
   return (

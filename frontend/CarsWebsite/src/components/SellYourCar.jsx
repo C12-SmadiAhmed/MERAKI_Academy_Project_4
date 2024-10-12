@@ -22,7 +22,7 @@ const [Seating, setSeating] = useState("")
 const [author, setauthor] = useState("")
 const [location, setlocation] = useState("")
 const [sellersNote, setsellersNote] = useState("")
-const [carImage, setcarImage] = useState("")
+const [carImage, setcarImage] = useState([])
 const [error, seterror] = useState({})
 
 const handlineUserError= ()=>{
@@ -42,7 +42,6 @@ const userEroor={}
   if (!Exterior) userEroor.Exterior = "Exterior features are required.";
   if (!Safety) userEroor.Safety = "Safety features are required.";
   if (!Seating) userEroor.Seating = "Seating information is required.";
-  if (!author) userEroor.author = "Author is required.";
   if (!location) userEroor.location = "Location is required.";
   if (!carImage) userEroor.carImage = "Car image is required.";
   if (!sellersNote) userEroor.sellersNote = "Seller's note is required.";
@@ -55,7 +54,45 @@ const token =localStorage.getItem('token')
 
 const userId= token ? JSON.parse(atob(token.split('.')[1])).userId : null ; 
 
+
+
+const handleFileUpload = (e) => {
+  const files = Array.from(e.target.files);
+  const uploadPromises = files.map(file => {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', 'project4'); 
+
+    return axios.post('https://api.cloudinary.com/v1_1/du9togbq9/image/upload', formData)
+      .then(response => {
+        console.log('image is uploaded:', response.data);
+        return response.data.secure_url; 
+      })
+      .catch(error => {
+        console.error('Error uploading image:', error);
+      });
+  });
+
+  
+  Promise.all(uploadPromises).then(urls => {
+    setcarImage(urls);
+  });
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
 const SubmitButton=()=>{
+  console.log("Submit button clicked")
 setcarCondtion(carCondtion)
 setmade(made)
 setmodel(model)
@@ -77,6 +114,7 @@ setcarImage(carImage)
 setsellersNote(sellersNote)
 
 const userError= handlineUserError()
+console.log("User Errors:", userError);
 if (Object.keys(userError).length > 0) {
   seterror(userError);
 
@@ -119,7 +157,7 @@ axios.post("http://localhost:5000/posts/createpost"
     console.log("done")
   };
 }).catch((err)=>{
-  console.log(err.response.data.err)
+  console.log(err)
 })
 
 }
@@ -146,22 +184,62 @@ axios.post("http://localhost:5000/posts/createpost"
   {error.carCondtion && <span style={{ margintop: '5px' ,fontSize: '15px', color: 'red' }}>{error.carCondtion}</span>}
 
   <input className='SalesInputs' placeholder='Name of your Car' onChange={(e)=>{setmade(e.target.value)}} />
+  {error.made && <span style={{ margintop: '5px' ,fontSize: '15px', color: 'red' }}>{error.made}</span>}
+
   <input className='SalesInputs'  placeholder='Model of your Car' onChange={(e)=>{setmodel(Number(e.target.value))}}/> 
+  {error.model && <span style={{ margintop: '5px' ,fontSize: '15px', color: 'red' }}>{error.model}</span>}
+
+
   <input className='SalesInputs'  placeholder='Your estimated Price' onChange={(e)=>{setprice(Number(e.target.value))}}/>
+  {error.price && <span style={{ margintop: '5px' ,fontSize: '15px', color: 'red' }}>{error.price}</span>}
+
   <input  className='SalesInputs' placeholder='Range for Km the car ' onChange={(e)=>{setrange(Number(e.target.value))}}/>
+  {error.range && <span style={{ margintop: '5px' ,fontSize: '15px', color: 'red' }}>{error.range}</span>}
+
   <input className='SalesInputs'  placeholder='Exterior Color' onChange={(e)=>{setexteriorColor(e.target.value)}}/>
+  {error.exteriorColor && <span style={{ margintop: '5px' ,fontSize: '15px', color: 'red' }}>{error.exteriorColor}</span>}
+  
+
   <input className='SalesInputs'  placeholder='Interior Color' onChange={(e)=>{setinteriorColor(e.target.value)}}/>
+  {error.interiorColor && <span style={{ margintop: '5px' ,fontSize: '15px', color: 'red' }}>{error.interiorColor}</span>}
+
   <input className='SalesInputs'  placeholder='Drive Train' onChange={(e)=>{setdrivetrain(e.target.value)}}/>
+  {error.drivetrain && <span style={{ margintop: '5px' ,fontSize: '15px', color: 'red' }}>{error.drivetrain}</span>}
+
+
   <input className='SalesInputs'  placeholder='Fuel Type' onChange={(e)=>{setfueltype(e.target.value)}}/>
+  {error.fueltype && <span style={{ margintop: '5px' ,fontSize: '15px', color: 'red' }}>{error.fueltype}</span>}
+
+
+
   <input className='SalesInputs'  placeholder='Transmission' onChange={(e)=>{setTransmission(e.target.value)}}/>
+  {error.Transmission && <span style={{ margintop: '5px' ,fontSize: '15px', color: 'red' }}>{error.Transmission}</span>}
+
+
   <input className='SalesInputs' placeholder='Convenience' onChange={(e)=>{setConvenience(e.target.value)}}/>
+  {error.Convenience && <span style={{ margintop: '5px' ,fontSize: '15px', color: 'red' }}>{error.Convenience}</span>}
+
   <input className='SalesInputs'  placeholder='Entertainment' onChange={(e)=>{setEntertainment(e.target.value)}}/>
+  {error.Entertainment && <span style={{ margintop: '5px' ,fontSize: '15px', color: 'red' }}>{error.Entertainment}</span>}
+
   <input className='SalesInputs'  placeholder='Exterior' onChange={(e)=>{setExterior(e.target.value)}}/>
+  {error.Exterior && <span style={{ margintop: '5px' ,fontSize: '15px', color: 'red' }}>{error.Exterior}</span>}
+
   <input className='SalesInputs'  placeholder='Safety' onChange={(e)=>{setSafety(e.target.value)}}/>
+  {error.Safety && <span style={{ margintop: '5px' ,fontSize: '15px', color: 'red' }}>{error.Safety}</span>}
+
   <input className='SalesInputs' placeholder='Seating' onChange={(e)=>{setSeating(e.target.value)}}/>
+  {error.Seating && <span style={{ margintop: '5px' ,fontSize: '15px', color: 'red' }}>{error.Seating}</span>}
+
   <input className='SalesInputs'  placeholder=' Your Location' onChange={(e)=>{setlocation(e.target.value)}}/>
-  <input className='SalesInputs'  placeholder='Car Images' onChange={(e)=>{setcarImage(e.target.value)}}/>
+  {error.location && <span style={{ margintop: '5px' ,fontSize: '15px', color: 'red' }}>{error.location}</span>}
+
+  <input type="file" multiple  className='SalesInputs'  placeholder='Car Images' onChange={(e)=>handleFileUpload(e)}/>
+  {error.carImage && <span style={{ margintop: '5px' ,fontSize: '15px', color: 'red' }}>{error.carImage}</span>}
+
   <input className='SalesInputs'  placeholder='Seller sNote' onChange={(e)=>{setsellersNote(e.target.value)}}/>
+  {error.sellersNote && <span style={{ margintop: '5px' ,fontSize: '15px', color: 'red' }}>{error.sellersNote}</span>}
+
 <button className='SalesInputs'  onClick={SubmitButton}>Submit</button>
  </div>
     </div>
