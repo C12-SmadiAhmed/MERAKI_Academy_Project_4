@@ -1,6 +1,7 @@
-import React, { useState , createContext }  from 'react' 
+import React, { useState , createContext ,useEffect}  from 'react' 
 import './App.css'
 import { Routes, Route, Link, useNavigate } from "react-router-dom"
+import axios from 'axios'
 import CarsforSale from './components/CarsForSale'
 import NewCars from './components/NewCars'
 import NewsAndVideos from './components/NewsAndVideos'
@@ -9,6 +10,7 @@ import SignIn from './components/SignIn'
 import Navbar from './components/Navbar'
 import HomePage from './components/HomePage'
 import Register from './components/Register'
+import CarDetails from './components/Cardetailes'
 
 export const registerContext=createContext()
 
@@ -17,9 +19,31 @@ function App() {
   const [token, settoken] = useState(localStorage.getItem('token')|| '')
 const [loggedin, setloggedin] = useState(false)
 const [firstName,setfirstName1]= useState("")
+
+const [posts, setposts] = useState([])
+//const [currentImageNumber, setcurrentImageNumber] = useState([])
+useEffect(()=>{
+  axios.get(`http://localhost:5000/posts`).then((res)=>{
+    setposts(res.data.post)
+   
+  
+  }).catch((err)=>{
+    //seterror1(err.response.data.message)
+    console.log(err)
+    
+  
+  
+})},[]) 
+
+
+
+
+
+
+
   return (
     <>
-    <registerContext.Provider value={{token,settoken,loggedin,setloggedin,firstName,setfirstName1}}>
+    <registerContext.Provider value={{token,settoken,loggedin,setloggedin,firstName,setfirstName1,posts,setposts}}>
     <Routes>
     <Route path="/" element={<HomePage/>}/>
     <Route path="/Shopping" element={<CarsforSale/>}/>
@@ -29,6 +53,7 @@ const [firstName,setfirstName1]= useState("")
     <Route path="/Signin" element={<SignIn/>}/>
     <Route path="/Navbar" element={<Navbar/>}/>
     <Route path="/Register" element={<Register/>}/>
+    <Route path="/Car-Details/:id" element={<CarDetails posts={posts}/>}/>
     </Routes>
     </registerContext.Provider>
     </>
