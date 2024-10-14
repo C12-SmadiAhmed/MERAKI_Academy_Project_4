@@ -11,6 +11,9 @@ import Navbar from './components/Navbar'
 import HomePage from './components/HomePage'
 import Register from './components/Register'
 import CarDetails from './components/Cardetailes'
+import AdminSignIn from './components/Adminlogin'
+import AdminDashbored from './components/AdminDashbored'
+import Adminroute from './components/Adminroute'
 
 export const registerContext=createContext()
 
@@ -45,6 +48,9 @@ useEffect(()=>{
     <>
     <registerContext.Provider value={{token,settoken,loggedin,setloggedin,firstName,setfirstName1,posts,setposts}}>
     <Routes>
+    <Route path="/admin/signin" element={<AdminSignIn/>}/>
+    <Route path="/admin/dashbored" element={<Adminroute element={<AdminDashbored />} />} />
+
     <Route path="/" element={<HomePage/>}/>
     <Route path="/Shopping" element={<CarsforSale/>}/>
     <Route path="/New-cars" element={<NewCars/>}/>
