@@ -8,7 +8,7 @@ const {token,loggedin}= useContext(registerContext)
 const isAdmin= token ? JSON.parse(atob(token.split('.')[1])).role : null ; 
 console.log(isAdmin.role)
 
-if (!loggedin || isAdmin.role!== 'Admin'){
+if ( isAdmin.role!== 'Admin'){
     return <Navigate to="/admin/signin"></Navigate> 
 }
 return element
