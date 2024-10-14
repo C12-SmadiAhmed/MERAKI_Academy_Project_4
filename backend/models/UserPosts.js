@@ -18,7 +18,7 @@ Safety:{type:String , required:true},
 Seating:{type:String , required:true},
 author:{ type: mongoose.Schema.Types.ObjectId, ref: "User" }, 
 location: {type:String , required:true} , 
-carImage: {type:String } , 
+carImage: {type:Array, required:true } , 
 sellersNote:{type:String } , 
 })
 

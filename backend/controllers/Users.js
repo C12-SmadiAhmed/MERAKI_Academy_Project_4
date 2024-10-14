@@ -5,9 +5,10 @@ const jwt = require("jsonwebtoken");
 
 const register= (req,res)=>{
 const {firstName,lastName,age,password,email}=req.body
-
+//const role= "670d7fd43540f14132b2adcf"  //Admin role
+const role="670d7fa63540f14132b2adcd"  //user role 
 const user= new userModel({
-    firstName,lastName,age,password,email
+    firstName,lastName,age,password,email,role
 
 })
 user.save().then((result)=>{
@@ -81,10 +82,18 @@ const login = (req, res) => {
     });
 };
 
-
+const getNumberOfusers= async(req,res)=>{
+  try {
+    const count= await userModel.countDocuments()
+    res.status(200).json({NumberofUsers :count})
+  } catch (error) {
+    res.status(500).json({err})
+  }
+  
+  } 
 
 
 
 module.exports={
-    register, login
+    register, login, getNumberOfusers
 }

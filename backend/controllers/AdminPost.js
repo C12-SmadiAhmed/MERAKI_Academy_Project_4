@@ -1,12 +1,44 @@
 const adminPostModel = require("../models/AdminPosts")
 
 const createAdminPost=(req,res)=>{
-    const {carCondtion,made,model,range,price,battery,engine
-        ,author,location,carImage}=req.body
+    const {carCondtion,
+      made,
+      model,
+      price,
+      range,
+      exteriorColor,
+      interiorColor,
+      drivetrain,
+      fueltype,
+      Transmission,
+      Convenience,
+      Entertainment,
+      Exterior,
+      Safety,
+      Seating,
+      location,
+      carImage,
+      sellersNote,}=req.body
     
     const post= new adminPostModel({
-        carCondtion,made,model,range,price,battery,engine
-        ,author,location,carImage
+      carCondtion,
+      made,
+      model,
+      price,
+      range,
+      exteriorColor,
+      interiorColor,
+      drivetrain,
+      fueltype,
+      Transmission,
+      Convenience,
+      Entertainment,
+      Exterior,
+      Safety,
+      Seating,
+      location,
+      carImage,
+      sellersNote,
     })
     post.save().then((result)=>{
         res.status(201).json({

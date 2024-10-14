@@ -1,12 +1,46 @@
 const postModel=require("../models/UserPosts")
 
 const createPost=(req,res)=>{
-const {carCondtion,made,model,range,price,battery,engine
-    ,author,location,carImage}=req.body
+const {carCondtion, 
+  made , 
+  model ,
+  price ,
+  range ,
+  exteriorColor ,
+  interiorColor ,
+  drivetrain ,
+  fueltype ,
+  Transmission ,
+  Convenience ,
+  Entertainment ,
+  Exterior ,
+  Safety ,
+  Seating , 
+  author ,
+  location ,
+  carImage, 
+  sellersNote}=req.body
 
 const post= new postModel({
-    carCondtion,made,model,range,price,battery,engine
-    ,author,location,carImage
+  carCondtion, 
+  made , 
+  model ,
+  price ,
+  range ,
+  exteriorColor ,
+  interiorColor ,
+  drivetrain ,
+  fueltype ,
+  Transmission ,
+  Convenience ,
+  Entertainment ,
+  Exterior ,
+  Safety ,
+  Seating , 
+  author ,
+  location ,
+  carImage, 
+  sellersNote
 })
 post.save().then((result)=>{
     res.status(201).json({
@@ -24,7 +58,7 @@ post.save().then((result)=>{
 }
 
 const getAllPosts = (req, res) => {
-    const userId = req.token.userId;
+   
     postModel
       .find()
       .exec()
@@ -33,7 +67,6 @@ const getAllPosts = (req, res) => {
           res.status(200).json({
             success: true,
             message: `All the posts`,
-            userId: userId,
             post: posts,
           });
         } else {
@@ -102,15 +135,23 @@ Object.keys(filter).forEach((key) => {
   });
   }
 
+const getNumberOfPosts= async(req,res)=>{
+try {
+  const count= await postModel.countDocuments()
+  res.status(200).json({Numberofposts :count})
+} catch (error) {
+  res.status(500).json({err})
+}
 
-
+}
 
 
 module.exports={
     createPost , 
     getAllPosts, 
     deletePostbyId, 
-    updatePostbyId
+    updatePostbyId, 
+    getNumberOfPosts,
 }
 
 
