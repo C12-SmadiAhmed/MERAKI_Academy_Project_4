@@ -1,11 +1,19 @@
 import React, { useContext , useState } from 'react';
 import { useParams } from 'react-router-dom'
 import { registerContext } from '../App';
+import axios from 'axios'
 
 const CarDetails = () => {
 const {posts,setposts}=useContext(registerContext)
 const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    
+const [firstName, setfirstName] = useState("")
+const [lastName, setlastName] = useState("")
+const [email , setemail]= useState("")
+const[phoneNumber,setphoneNumber]=useState(0)
+const [message , setmessage]= useState("")
+const {token}=useContext(registerContext)
+
+const userId= token ? JSON.parse(atob(token.split('.')[1])).userId : null ; //id for the customer
 
     const { id } = useParams(); 
     console.log(id)
@@ -18,8 +26,6 @@ const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const totalImages = car.carImage.length;
     console.log(totalImages)
     
-    const convince=car.Convenience.split(/ +/)
-    const fixedConvince=convince.join(', ')
 
     const nextImage = () => {
         setCurrentImageIndex((prevIndex) => (prevIndex + 1) % totalImages);
@@ -27,8 +33,56 @@ const [currentImageIndex, setCurrentImageIndex] = useState(0);
     
       const prevImage = () => {
         setCurrentImageIndex((prevIndex) => (prevIndex - 1 + totalImages) % totalImages);
-      };
+};
       console.log(car.carImage)
+      console.log(car.Convenience)
+      console.log("sellerid",car.author)
+      console.log("userid",userId)
+      console.log("carid",car._id)
+
+const sendButton=()=>{
+  console.log("sned button clicked")
+setfirstName(firstName)
+setlastName(lastName)
+setemail(email)
+setphoneNumber(phoneNumber)
+setmessage(message)
+
+const body={
+  firstName , 
+lastName,
+email,
+phoneNumber,
+message,
+carId:car._id , 
+sellerId: car.author ,
+customerId: userId
+}
+axios.post("http://localhost:5000/messages/", body ,
+{
+  headers:{
+    Authorization:`Bearer ${token}`
+    
+  }
+}
+
+
+).then((result)=>{
+  console.log(result)
+  console.log(result.status)
+  if (result.status===201){
+   console.log("message sent to seller")};
+}).catch((err)=>{
+  console.log(err)
+})
+
+
+
+}
+
+
+
+
       return (
         <>
         <div className='cardetailsmain'>
@@ -74,15 +128,25 @@ const [currentImageIndex, setCurrentImageIndex] = useState(0);
 <span className='border'></span>
 <br/>
 <h1>Features</h1>
-<span className='feature'> <span className='label'>Convenience</span>
-<span className='value'>{fixedConvince}</span> </span><span className='border'></span>
-
+<span className='feature'> <span className='label'>Convenience:</span>
+<span className='value'>{car.Convenience.map((elem, i) => (
+  <ul id="featureslist" key={i}>{elem}</ul>
+))}</span> </span>
+<span className='border'></span>
 
 
  </div> 
          
           <div className='contact-seller'>
-<input placeholder='contact seller'/>
+ <h2>Contact seller</h2>
+<input onChange={(e)=>{setfirstName(e.target.value)}}  placeholder='Fist name'/>
+<input onChange={(e)=>{setlastName(e.target.value)}}placeholder='Last name'/>
+<input onChange={(e)=>{setemail(e.target.value)}} placeholder='Email'/>
+<input onChange={(e)=>{setphoneNumber(e.target.value)}}placeholder='Phone (optional)'/>
+<input onChange={(e)=>{setmessage(e.target.value)}} placeholder='Write your qustion or massage'/>
+<button onClick={sendButton}>send</button>
+
+
 </div>
           </div>
         </>

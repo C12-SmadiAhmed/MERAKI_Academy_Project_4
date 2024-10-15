@@ -14,16 +14,48 @@ const [interiorColor, setinteriorColor] = useState("")
 const [drivetrain, setdrivetrain] = useState("")
 const [fueltype, setfueltype] = useState("")
 const [Transmission, setTransmission] = useState("")
-const [Convenience, setConvenience] = useState("")
-const [Entertainment, setEntertainment] = useState("")
+const [Convenience, setConvenience] = useState([])
+const [Entertainment, setEntertainment] = useState([])
 const [Exterior, setExterior] = useState("")
-const [Safety, setSafety] = useState("")
-const [Seating, setSeating] = useState("")
+const [Safety, setSafety] = useState([])
+const [Engine, setEngine] = useState("")
 const [author, setauthor] = useState("")
 const [location, setlocation] = useState("")
 const [sellersNote, setsellersNote] = useState("")
 const [carImage, setcarImage] = useState([])
 const [error, seterror] = useState({})
+
+//--------
+const [newConvenience, setNewConvenience] = useState("");
+const [newEntertainment, setNewEntertainment] = useState("");
+const [newSafety, setNewSafety] = useState("");
+
+const addConvenience = () => {
+  if (newConvenience) {
+    setConvenience([...Convenience, newConvenience]);
+    setNewConvenience(""); 
+  }
+};
+
+const addEntertainment = () => {
+  if (newEntertainment) {
+    setEntertainment([...Entertainment, newEntertainment]);
+    setNewEntertainment(""); 
+  }
+};
+
+const addSafety = () => {
+  if (newSafety) {
+    setSafety([...Safety, newSafety]);
+    setNewSafety(""); 
+  }
+}
+
+
+
+
+
+
 
 const handlineUserError= ()=>{
 const userEroor={}
@@ -41,7 +73,7 @@ const userEroor={}
   if (!Entertainment) userEroor.Entertainment = "Entertainment is required.";
   if (!Exterior) userEroor.Exterior = "Exterior features are required.";
   if (!Safety) userEroor.Safety = "Safety features are required.";
-  if (!Seating) userEroor.Seating = "Seating information is required.";
+  if (!Engine) userEroor.Seating = "Engine information is required.";
   if (!location) userEroor.location = "Location is required.";
   if (!carImage) userEroor.carImage = "Car image is required.";
   if (!sellersNote) userEroor.sellersNote = "Seller's note is required.";
@@ -81,16 +113,6 @@ const handleFileUpload = (e) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
 const SubmitButton=()=>{
   console.log("Submit button clicked")
 setcarCondtion(carCondtion)
@@ -107,7 +129,7 @@ setConvenience(Convenience)
 setEntertainment(Entertainment)
 setExterior(Exterior)
 setSafety(Safety)
-setSeating(Seating)
+setEngine(Engine)
 setauthor(author)
 setlocation(location)
 setcarImage(carImage)
@@ -136,7 +158,7 @@ const body={
   Entertainment:Entertainment, 
   Exterior : Exterior , 
   Safety : Safety , 
-  Seating: Seating , 
+  Enigne: Engine , 
   author: userId , 
   location: location , 
   carImage: carImage , 
@@ -215,20 +237,63 @@ axios.post("http://localhost:5000/posts/createpost"
   {error.Transmission && <span style={{ margintop: '5px' ,fontSize: '15px', color: 'red' }}>{error.Transmission}</span>}
 
 
-  <input className='SalesInputs' placeholder='Convenience' onChange={(e)=>{setConvenience(e.target.value)}}/>
+  {/* <input className='SalesInputs' placeholder='Convenience' onChange={(e)=>{setConvenience(e.target.value)}}/>
   {error.Convenience && <span style={{ margintop: '5px' ,fontSize: '15px', color: 'red' }}>{error.Convenience}</span>}
 
   <input className='SalesInputs'  placeholder='Entertainment' onChange={(e)=>{setEntertainment(e.target.value)}}/>
-  {error.Entertainment && <span style={{ margintop: '5px' ,fontSize: '15px', color: 'red' }}>{error.Entertainment}</span>}
+  {error.Entertainment && <span style={{ margintop: '5px' ,fontSize: '15px', color: 'red' }}>{error.Entertainment}</span>} */}
+
+
+<input
+  className='SalesInputs'
+  placeholder='Add Convenience'
+  value={newConvenience}
+  onChange={(e) => setNewConvenience(e.target.value)}
+/>
+<button onClick={addConvenience}>Add</button>
+<ul>
+  {Convenience.map((item, index) => (
+    <li key={index}>{item}</li>
+  ))}
+</ul>
+
+<input
+  className='SalesInputs'
+  placeholder='Add Entertainment'
+  value={newEntertainment}
+  onChange={(e) => setNewEntertainment(e.target.value)}
+/>
+<button onClick={addEntertainment}>Add</button>
+<ul>
+  {Entertainment.map((item, index) => (
+    <li key={index}>{item}</li>
+  ))}
+</ul>
+
 
   <input className='SalesInputs'  placeholder='Exterior' onChange={(e)=>{setExterior(e.target.value)}}/>
   {error.Exterior && <span style={{ margintop: '5px' ,fontSize: '15px', color: 'red' }}>{error.Exterior}</span>}
 
-  <input className='SalesInputs'  placeholder='Safety' onChange={(e)=>{setSafety(e.target.value)}}/>
-  {error.Safety && <span style={{ margintop: '5px' ,fontSize: '15px', color: 'red' }}>{error.Safety}</span>}
+  {/* <input className='SalesInputs'  placeholder='Safety' onChange={(e)=>{setSafety(e.target.value)}}/>
+  {error.Safety && <span style={{ margintop: '5px' ,fontSize: '15px', color: 'red' }}>{error.Safety}</span>} */}
 
-  <input className='SalesInputs' placeholder='Seating' onChange={(e)=>{setSeating(e.target.value)}}/>
-  {error.Seating && <span style={{ margintop: '5px' ,fontSize: '15px', color: 'red' }}>{error.Seating}</span>}
+<input
+  className='SalesInputs'
+  placeholder='Add Safety Feature'
+  value={newSafety}
+  onChange={(e) => setNewSafety(e.target.value)}
+/>
+<button onClick={addSafety}>Add</button>
+<ul>
+  {Safety.map((item, index) => (
+    <li key={index}>{item}</li>
+  ))}
+</ul>
+
+
+
+  <input className='SalesInputs' placeholder='Engine' onChange={(e)=>{setEngine(e.target.value)}}/>
+  {error.Engine && <span style={{ margintop: '5px' ,fontSize: '15px', color: 'red' }}>{error.Seating}</span>}
 
   <input className='SalesInputs'  placeholder=' Your Location' onChange={(e)=>{setlocation(e.target.value)}}/>
   {error.location && <span style={{ margintop: '5px' ,fontSize: '15px', color: 'red' }}>{error.location}</span>}

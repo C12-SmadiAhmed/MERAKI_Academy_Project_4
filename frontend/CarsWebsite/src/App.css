@@ -246,7 +246,10 @@ justify-self: center;
   color: #03154be7; 
   margin-bottom: 20px; 
   line-height: 1.2; 
-  font-family: 'Roboto', sans-serif;}
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+
+}
 
   .sell-Your-car-page {
     display: flex; 
@@ -262,7 +265,17 @@ justify-self: center;
     padding: 10px; 
     border: 1px solid #ccc; 
     border-radius: 5px; 
+    background-color: #1976d2;
+    color: white;
+    font-size: 18px;
   }
+
+.SalesInputs::placeholder{
+font-size: 18px;
+color: rgb(255, 255, 255);
+  }
+
+ 
 
   .cardetailsmain{
     display: flex; 
@@ -309,4 +322,23 @@ justify-self: center;
     height: 1px; 
     background: #ccc; 
     margin: 2px auto;  
+} 
+
+.admindashbored{
+display: flex; 
+justify-content: space-between; 
+align-items: flex-start; 
+padding: 20px;
+gap: 150px;
+
+
+}
+
+#selling-brief{
+  font-size: 22px;
+}
+
+#featureslist{
+  margin: 0;
+  padding: 0;
 }

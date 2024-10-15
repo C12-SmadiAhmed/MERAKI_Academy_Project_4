@@ -38,14 +38,23 @@ setnumberofposts(result.data.Numberofposts)
     },[]) 
 
   return (
-    <div>
-      
-      AdminDashbored
+    <>
+    <h1>Admin Dashbored</h1> 
+    <div className='admindashbored'>
+  <div className='informtion-for-admin'> 
 <h2>Number of Posts made on the webiste: {numberofposts}</h2>
 <h2>Number of Users registerd on the webiste: {numberofusers}</h2>
+</div>   
+
+<div className='Adminposts'>
+<input/>
 
 
-    </div>
+</div>
+
+
+    </div> 
+    </>
   )
 }
 
