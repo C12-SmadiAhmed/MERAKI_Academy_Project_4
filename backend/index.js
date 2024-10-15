@@ -15,6 +15,7 @@ const rolesRouter=require("./routes/Roles")
 const postRouter=require("./routes/Posts")
 const admiPostRouter=require("./routes/AdminPosts")
 const categorieRouter=require("./routes/Category")
+const messageRouter=require("./routes/Messages")
 
 app.use(cors());
 app.use(express.json());
@@ -25,6 +26,7 @@ app.use("/posts", postRouter);
 app.use("/Adminposts", admiPostRouter);
 app.use("/category", categorieRouter);
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/messages',messageRouter)
 
 
 app.use("*", (req, res) => res.status(404).json("NO content at this path"));
