@@ -1,11 +1,24 @@
 import axios from 'axios'
 import React, { useContext, useEffect , useState } from 'react'
 import { registerContext } from '../App'
+import AdminPosts from './AdminPosts'
+import { useNavigate } from 'react-router-dom'
 
 const AdminDashbored = () => {
 const [numberofposts, setnumberofposts] = useState(0)
 const [numberofusers, setnumberofusers] = useState(0)
 const {token}=useContext(registerContext)
+const navigite=useNavigate()
+const createPosts=()=>{
+navigite("/admin/createpost")
+
+
+}
+
+
+
+
+
 
 console.log(token)
   useEffect(()=>{
@@ -47,9 +60,9 @@ setnumberofposts(result.data.Numberofposts)
 </div>   
 
 <div className='Adminposts'>
-<input/>
-
-
+ <button onClick={createPosts}>Create New Posts</button>       
+ <button onClick={()=>{navigite("/Userinfo")}}>Users informtion</button> 
+ <button onClick={()=>{navigite("/UserPosts")}}>Check User Posts</button> 
 </div>
 
 

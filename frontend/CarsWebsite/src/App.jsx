@@ -1,6 +1,6 @@
 import React, { useState , createContext ,useEffect}  from 'react' 
 import './App.css'
-import { Routes, Route, Link, useNavigate } from "react-router-dom"
+import { Routes, Route, Link, useNavigate, useLocation } from "react-router-dom"
 import axios from 'axios'
 import CarsforSale from './components/CarsForSale'
 import NewCars from './components/NewCars'
@@ -14,6 +14,10 @@ import CarDetails from './components/Cardetailes'
 import AdminSignIn from './components/Adminlogin'
 import AdminDashbored from './components/AdminDashbored'
 import Adminroute from './components/Adminroute'
+import SellerMessages from './components/Messages'
+import adminPosts from './components/AdminPosts'
+import UsersInfo from './components/UsersInfor'
+import CheckUsersPosts from './components/CheckUsersPosts'
 
 export const registerContext=createContext()
 
@@ -38,18 +42,21 @@ useEffect(()=>{
   
 })},[]) 
 
-
-
+const location=useLocation()
+const adminPaths = ['/admin/signin', '/admin/dashbored', '/admin/createpost',"/UserPosts","/Userinfo"]
 
 
 
 
   return (
     <>
+     
     <registerContext.Provider value={{token,settoken,loggedin,setloggedin,firstName,setfirstName1,posts,setposts}}>
+    {!adminPaths.includes(location.pathname) && <Navbar />}
     <Routes>
     <Route path="/admin/signin" element={<AdminSignIn/>}/>
     <Route path="/admin/dashbored" element={<Adminroute element={<AdminDashbored />} />} />
+    <Route path="/admin/createpost" element={<adminPosts/>}/>
 
     <Route path="/" element={<HomePage/>}/>
     <Route path="/Shopping" element={<CarsforSale/>}/>
@@ -60,6 +67,9 @@ useEffect(()=>{
     <Route path="/Navbar" element={<Navbar/>}/>
     <Route path="/Register" element={<Register/>}/>
     <Route path="/Car-Details/:id" element={<CarDetails posts={posts}/>}/>
+    <Route path="/messages" element={<SellerMessages/>}/>
+    <Route path="/Userinfo" element={<UsersInfo/>}/>
+    <Route path="/UserPosts" element={<CheckUsersPosts/>}/>
     </Routes>
     </registerContext.Provider>
     </>

@@ -39,6 +39,7 @@ const userId= token ? JSON.parse(atob(token.split('.')[1])).userId : null ; //id
       console.log("sellerid",car.author)
       console.log("userid",userId)
       console.log("carid",car._id)
+      
 
 const sendButton=()=>{
   console.log("sned button clicked")
@@ -96,12 +97,12 @@ axios.post("http://localhost:5000/messages/", body ,
              
           <button className='favbutton' onClick={prevImage}>Previous</button>
               <button className='favbutton' onClick={nextImage}>Next</button>
-          <h2>{car.model} {car.made}</h2>
-          <h3>Condition: {car.carCondtion}</h3>
-          <h3>Price: ${car.price}</h3>
+           <h2> {car.carCondtion}</h2>
+         <h2>{car.model} {car.made}</h2>
+        <h2>Price: ${car.price}</h2>
           <br/>
           <h1>Basics</h1>
-          <span className='feature'> <span className='label'>Exterior Color:</span>
+          <span className='feature'> <span className='label'>Exterior Color</span>
           <span className='value'>{car.exteriorColor}</span> </span><span className='border'></span>
 
           <span className='feature'><span className='label'>Interior Color:</span>
@@ -120,6 +121,10 @@ axios.post("http://localhost:5000/messages/", body ,
     <span className='value'>{car.Transmission}</span>
 </span>
 <span className='border'></span>
+<span className='feature'><span className='label'>Engine</span>
+          <span className='value'>{car.Enigne}</span>
+         </span>
+         <span className='border'></span>
 
 <span className='feature'>
   <span className='label'>Range:</span>
@@ -132,7 +137,24 @@ axios.post("http://localhost:5000/messages/", body ,
 <span className='value'>{car.Convenience.map((elem, i) => (
   <ul id="featureslist" key={i}>{elem}</ul>
 ))}</span> </span>
+
 <span className='border'></span>
+<span className='feature'> <span className='label'>Entertainment</span>
+<span className='value'>{car.Entertainment.map((elem, i) => (
+  <ul id="featureslist" key={i}>{elem}</ul>
+))}</span> </span>
+<span className='border'></span>
+<span className='feature'>
+  <span className='label'>Exterior</span>
+    <span className='value'>{car.Exterior} </span>
+</span>
+<span className='border'></span>
+<span className='feature'> <span className='label'>Safety</span>
+<span className='value'>{car.Safety.map((elem, i) => (
+  <ul id="featureslist" key={i}>{elem}</ul>
+))}</span> </span> 
+<span className='border'></span>
+
 
 
  </div> 
@@ -145,6 +167,24 @@ axios.post("http://localhost:5000/messages/", body ,
 <input onChange={(e)=>{setphoneNumber(e.target.value)}}placeholder='Phone (optional)'/>
 <input onChange={(e)=>{setmessage(e.target.value)}} placeholder='Write your qustion or massage'/>
 <button onClick={sendButton}>send</button>
+ 
+<span className='feature'>
+  <span className='label'>Seller detailes</span>
+    <span className='value'>{car.author} </span>
+</span>
+<span className='border'></span>
+
+<span className='feature'>
+  <span className='label'>Car location</span>
+    <span className='value'>{car.location} </span>
+</span>
+<span className='border'></span>
+
+<span className='feature'>
+  <span className='label'>Seller notes on the car</span>
+    <span className='value'>{car.sellersNote} </span>
+</span>
+<span className='border'></span>
 
 
 </div>

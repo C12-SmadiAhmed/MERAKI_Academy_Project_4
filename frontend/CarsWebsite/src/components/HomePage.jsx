@@ -1,8 +1,37 @@
 import React , {useEffect, useState} from 'react'
 import Navbar from './Navbar'
 import axios from "axios"
+import "../App.css"
+import Slider from 'react-slick'
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+
+const carsimage=[
+"./src/assets/wallpaper1.jpg",
+"./src/assets/wallpaper2.jpg",
+"./src/assets/wallpaper3.jpg",
+"./src/assets/wallpaper4.jpg",
+]
+
+ 
+
+
+
 const HomePage = () => {
 const [category, setcategory] = useState([])
+
+const settings = {
+  dots: true, 
+  infinite: true, 
+  speed: 500, 
+  slidesToShow: 1, 
+  slidesToScroll: 1, 
+ // autoplay: true,          
+    //autoplaySpeed: 5000, 
+};
+
+
+
 
 const showCategory=(category)=>{
 
@@ -26,10 +55,15 @@ const showCategory=(category)=>{
 
   return (
     <>
-    <div className='homepage'>
-        <Navbar/>
-      <img id="homephoto" src="./src/assets/home-car-wallpapers.jpg"></img>
-    </div>
+       <div className="slider-container">
+        <Slider {...settings}>
+          {carsimage.map((image, index) => (
+            <div key={index}>
+              <img src={image} alt={`Car ${index + 1}`} className="slider-image" />
+            </div>
+          ))}
+        </Slider>
+      </div>
     <h2 id="Popularcategoris">Popular categoris</h2>
     <div className='categoryButtons'>
 <button className='categoryButton' onClick={() => showCategory('Electric')}>Electric</button>
