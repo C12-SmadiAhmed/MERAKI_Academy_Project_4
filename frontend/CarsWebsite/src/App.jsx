@@ -18,7 +18,7 @@ import SellerMessages from './components/Messages'
 import adminPosts from './components/AdminPosts'
 import UsersInfo from './components/UsersInfor'
 import CheckUsersPosts from './components/CheckUsersPosts'
-
+import CarsCategory from './components/CarsCategory'
 export const registerContext=createContext()
 
 
@@ -57,6 +57,8 @@ const adminPaths = ['/admin/signin', '/admin/dashbored', '/admin/createpost',"/U
     <Route path="/admin/signin" element={<AdminSignIn/>}/>
     <Route path="/admin/dashbored" element={<Adminroute element={<AdminDashbored />} />} />
     <Route path="/admin/createpost" element={<adminPosts/>}/>
+
+    <Route path="/posts/:carName" element={<CarsCategory/>}/>
 
     <Route path="/" element={<HomePage/>}/>
     <Route path="/Shopping" element={<CarsforSale/>}/>

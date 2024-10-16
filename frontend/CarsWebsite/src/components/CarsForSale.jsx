@@ -1,10 +1,17 @@
 import axios from 'axios'
 import React , {useEffect, useState} from 'react'
 import { Routes, Route, Link, useNavigate } from "react-router-dom"
+import { TextField, Button, Box, Typography } from '@mui/material'
 
 const CarsforSale = () => {
 const [posts, setposts] = useState([])
 const [currentImageNumber, setcurrentImageNumber] = useState([])
+const [minPrice, setMinPrice] = useState(0);
+const [maxPrice, setMaxPrice] = useState(1000000)
+const [searchTerm, setSearchTerm] = useState("")
+
+
+
 useEffect(()=>{
   axios.get(`http://localhost:5000/posts`).then((res)=>{
     
@@ -20,6 +27,44 @@ useEffect(()=>{
   
   
 })},[])   
+
+
+const handleMinPriceChange = (e) => {
+  const value = e.target.value;
+  if (value === "") {
+    setMinPrice("");
+  } else {
+    const parsedValue = Number(value);
+    setMinPrice(isNaN(parsedValue) ? 0 : parsedValue);
+  }
+};
+
+const handleMaxPriceChange = (e) => {
+  const value = e.target.value;
+  if (value === "") {
+    setMaxPrice("");
+  } else {
+    const parsedValue = Number(value);
+    setMaxPrice(isNaN(parsedValue) ? 1000000 : parsedValue);
+  }
+};
+
+const handleSearchChange = (e) => {
+  setSearchTerm(e.target.value);
+};
+
+
+const filterPosts = () => {
+  return posts.filter(post => {
+    const price = parseFloat(post.price);
+    const matchesprice= price >= minPrice && price <= maxPrice;
+    const matchessearch = post.made.toLowerCase().includes(searchTerm.toLowerCase()) || post.model.toString().includes(searchTerm);
+    return matchesprice && matchessearch
+  });
+};
+
+const filteredPosts = filterPosts()
+
 
 const nextImage = (index) => {
   setcurrentImageNumber((prev) => {
@@ -40,8 +85,64 @@ const prevImage = (index) => {
 return (
   <div className='cars-for-sale-page'>
     <h2>Cars for Sale</h2>
+
+    <Box 
+        sx={{
+          backgroundColor: '#f9f9f9', 
+          p: 2, 
+          borderRadius: 2, 
+          boxShadow: 2,
+          mb: 3
+        }}
+      >
+        <Typography variant="h6" gutterBottom>
+          Filter by Price
+        </Typography>
+        <Box display="flex" justifyContent="space-between" mb={2}>
+          <TextField
+            label="Min Price"
+            type="number"
+            value={minPrice === "" ? "" : minPrice}
+            onChange={handleMinPriceChange}
+            variant="outlined"
+            size="small"
+            sx={{ flex: 1, mr: 1 }}
+          />
+          <TextField
+            label="Max Price"
+            type="number"
+            value={maxPrice === "" ? "" : maxPrice}
+            onChange={handleMaxPriceChange}
+            variant="outlined"
+            size="small"
+            sx={{ flex: 1 }}
+          />
+        </Box>
+        <TextField
+          label="Search by Make or Model"
+          variant="outlined"
+          size="small"
+          value={searchTerm}
+          onChange={handleSearchChange}
+          sx={{ width: '100%', mb: 2 }}
+        />
+        <Button 
+          variant="contained" 
+          color="primary" 
+          onClick={() => {}}
+        >
+          Apply Filter
+        </Button>
+      </Box>
+
+
+
+
+
+
     <div className='posts-container'>
-      {posts.map((elem, i) => {
+      {filteredPosts.map((elem, i) => {
+        ;
         const totalImages = elem.carImage ? elem.carImage.length : 0;
 
         return (

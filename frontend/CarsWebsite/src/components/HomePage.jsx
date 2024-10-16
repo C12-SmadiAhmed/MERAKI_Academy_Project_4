@@ -5,6 +5,9 @@ import "../App.css"
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { useNavigate } from 'react-router-dom'
+
+
 
 const carsimage=[
 "./src/assets/wallpaper1.jpg",
@@ -19,7 +22,7 @@ const carsimage=[
 
 const HomePage = () => {
 const [category, setcategory] = useState([])
-
+const navigate=useNavigate()
 const settings = {
   dots: true, 
   infinite: true, 
@@ -29,8 +32,9 @@ const settings = {
  // autoplay: true,          
     //autoplaySpeed: 5000, 
 };
-
-
+const showpostforCategory = (carName) => {
+  navigate(`/posts/${carName}`); 
+};
 
 
 const showCategory=(category)=>{
@@ -79,7 +83,7 @@ const showCategory=(category)=>{
  </div>
 <div className="carcategory">
 {category.map((elem, i) => 
-(<div key={i}>
+(<div key={i} className='caritem'onClick={() => showpostforCategory(elem.carName)}>
 
 <img src={`http://localhost:5000/${elem.carImage}`} alt={elem.carName} />
 <h3 id="carName">{elem.carName}</h3>
