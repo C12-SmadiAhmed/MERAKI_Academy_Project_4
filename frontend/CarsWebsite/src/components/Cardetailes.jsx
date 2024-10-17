@@ -1,11 +1,16 @@
-import React, { useContext , useState } from 'react';
+import React, { useContext , useState ,useEffect} from 'react';
 import { useParams } from 'react-router-dom'
 import { registerContext } from '../App';
 import axios from 'axios'
+import { TextField, Button, Box, Typography,IconButton } from '@mui/material'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+
+
 
 const CarDetails = () => {
 const {posts,setposts}=useContext(registerContext)
-const [currentImageIndex, setCurrentImageIndex] = useState(0);
+const [currentImageIndex, setCurrentImageIndex] = useState(5);
 const [firstName, setfirstName] = useState("")
 const [lastName, setlastName] = useState("")
 const [email , setemail]= useState("")
@@ -25,6 +30,7 @@ const userId= token ? JSON.parse(atob(token.split('.')[1])).userId : null ; //id
   
     const totalImages = car.carImage.length;
     console.log(totalImages)
+    
     
 
     const nextImage = () => {
@@ -86,17 +92,45 @@ axios.post("http://localhost:5000/messages/", body ,
 
       return (
         <>
-        <div className='cardetailsmain'>
-
-
-        <div className='car-details-page'>
+        <div className='top-cardetailes-page'>
+ <div className='car-descrption-image'> 
         <img
               src={car.carImage[currentImageIndex]}
               alt={`Image ${currentImageIndex + 1}`}
               className='detaild-car'/>
-             
-          <button className='favbutton' onClick={prevImage}>Previous</button>
-              <button className='favbutton' onClick={nextImage}>Next</button>
+            
+            <IconButton onClick={prevImage} disabled={totalImages <= 1}>
+                <ArrowBackIcon />
+              </IconButton>
+              <IconButton onClick={nextImage} disabled={totalImages <= 1}>
+                <ArrowForwardIcon />
+              </IconButton>
+              </div>
+
+
+<div className='right-hald-top-page'>
+<h2>Contact seller</h2> 
+ <div className='namesinput'>
+ 
+<input className="contact-Seller-inputs" onChange={(e)=>{setfirstName(e.target.value)}}  placeholder='Fist name'/>
+<input className="contact-Seller-inputs" onChange={(e)=>{setlastName(e.target.value)}}placeholder='Last name'/>
+</div>
+<div className='email-phone-inputs'>
+<input className="contact-Seller-inputs" onChange={(e)=>{setemail(e.target.value)}} placeholder='Email'/>
+<input className="contact-Seller-inputs" onChange={(e)=>{setphoneNumber(e.target.value)}}placeholder='Phone (optional)'/>
+</div>
+<div className='message-input'>
+<input className="contact-Seller-inputs" onChange={(e)=>{setmessage(e.target.value)}} placeholder='Write your qustion or massage'/>
+</div>
+
+<button className='submit-the-message' onClick={sendButton}>Send</button>
+</div>
+</div>
+
+        <div className='cardetailsmain'>
+        <div className='car-details-page'>
+
+
            <h2> {car.carCondtion}</h2>
          <h2>{car.model} {car.made}</h2>
         <h2>Price: ${car.price}</h2>
@@ -160,13 +194,7 @@ axios.post("http://localhost:5000/messages/", body ,
  </div> 
          
           <div className='contact-seller'>
- <h2>Contact seller</h2>
-<input onChange={(e)=>{setfirstName(e.target.value)}}  placeholder='Fist name'/>
-<input onChange={(e)=>{setlastName(e.target.value)}}placeholder='Last name'/>
-<input onChange={(e)=>{setemail(e.target.value)}} placeholder='Email'/>
-<input onChange={(e)=>{setphoneNumber(e.target.value)}}placeholder='Phone (optional)'/>
-<input onChange={(e)=>{setmessage(e.target.value)}} placeholder='Write your qustion or massage'/>
-<button onClick={sendButton}>send</button>
+ 
  
 <span className='feature'>
   <span className='label'>Seller detailes</span>

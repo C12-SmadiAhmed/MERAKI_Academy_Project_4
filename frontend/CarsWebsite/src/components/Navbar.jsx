@@ -8,7 +8,7 @@ import { Menu, MenuItem, Button } from '@mui/material';
 
 
 const Navbar = () => {
-const {token ,firstName,settoken,setloggedin }=useContext(registerContext)
+const {token ,firstName1,settoken,setloggedin }=useContext(registerContext)
 const navagite=useNavigate()
 const [dropdown, setdropdown] = useState(null);
 
@@ -39,7 +39,7 @@ const logOutButton=()=>{
       <h4><Link to={"/sell-your-car"}>Sell your car</Link></h4>
       {token ? (
         <>
-          <h3>Welcome {firstName}</h3>
+          <h3>Welcome {firstName1}</h3>
           <Button
             onClick={isMenuOpen}
             endIcon={<LuUserCircle2 style={{ width: '30px', height: '20px' }} />}

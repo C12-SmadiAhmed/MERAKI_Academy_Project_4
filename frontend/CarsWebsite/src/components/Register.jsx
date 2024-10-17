@@ -11,7 +11,7 @@ import { Container, Card, CardContent, TextField, Button, Typography, Grid } fro
 
 
 const Register = () => {
-  const {setfirstName1,firstName1}=useContext(registerContext)
+  const {setfirstName1}=useContext(registerContext)
 const [firstName, setfirstName] = useState("")
 const [lastName, setlastName] = useState("")
 const [age , setage]= useState("")
@@ -19,7 +19,7 @@ const [password , setpassword]= useState("")
 const [email , setemail]= useState("")
 const navagite=useNavigate()
 const RegisterButton=()=>{
-setfirstName(firstName1)
+setfirstName(firstName)
 setlastName(lastName)
 setage(age)
 setpassword(password)
@@ -42,7 +42,10 @@ axios.post("http://localhost:5000/users/register", body ,).then((result)=>{
     console.log(result.status)
     if (result.status===201){
       navagite("/Signin")
-    setfirstName1(firstName)};
+    setfirstName1(firstName)
+    console.log(firstName)
+  
+  };
 }).catch((err)=>{
     console.log(err)
 })

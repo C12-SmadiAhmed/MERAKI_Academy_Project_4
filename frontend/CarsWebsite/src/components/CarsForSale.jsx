@@ -1,7 +1,13 @@
 import axios from 'axios'
 import React , {useEffect, useState} from 'react'
 import { Routes, Route, Link, useNavigate } from "react-router-dom"
-import { TextField, Button, Box, Typography } from '@mui/material'
+import { TextField, Button, Box, Typography,IconButton } from '@mui/material'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+
+
+
+
 
 const CarsforSale = () => {
 const [posts, setposts] = useState([])
@@ -92,7 +98,8 @@ return (
           p: 2, 
           borderRadius: 2, 
           boxShadow: 2,
-          mb: 3
+          mb: 3 , 
+          width: '80%',
         }}
       >
         <Typography variant="h6" gutterBottom>
@@ -143,7 +150,8 @@ return (
     <div className='posts-container'>
       {filteredPosts.map((elem, i) => {
         ;
-        const totalImages = elem.carImage ? elem.carImage.length : 0;
+        const totalImages = elem.carImage ? elem.carImage.length : 0; 
+        const filterdNumbers=(elem.price).toLocaleString()
 
         return (
           <div className='post-card' key={i}>
@@ -158,9 +166,15 @@ return (
             </div>
             <div className='image-buttons'>
               {totalImages > 1 && (
-                <>
-                  <button onClick={() => prevImage(i)} disabled={totalImages <= 1}>Previous</button>
-                  <button onClick={() => nextImage(i)} disabled={totalImages <= 1}>Next</button>
+                <>  
+                <IconButton onClick={() => prevImage(i)} disabled={totalImages <= 1}>
+                <ArrowBackIcon />
+              </IconButton>
+              <IconButton onClick={() => nextImage(i)} disabled={totalImages <= 1}>
+                <ArrowForwardIcon />
+              </IconButton>
+                  {/* <button onClick={() => prevImage(i)} disabled={totalImages <= 1}>Previous</button>
+                  <button onClick={() => nextImage(i)} disabled={totalImages <= 1}>Next</button> */}
                 </>
               )}
             </div>
@@ -168,8 +182,9 @@ return (
             
               <h3>{elem.carCondtion}</h3>
               <Link to={`/Car-Details/${elem._id}`}>
-              <h3>{elem.made}</h3></Link>
-              <h3>{elem.price}</h3>
+              <h3>{elem.model} {elem.made}</h3></Link>
+              {}
+              <h3>{filterdNumbers} JOD</h3>
             </div>
           </div>
         );

@@ -19,14 +19,16 @@ import adminPosts from './components/AdminPosts'
 import UsersInfo from './components/UsersInfor'
 import CheckUsersPosts from './components/CheckUsersPosts'
 import CarsCategory from './components/CarsCategory'
+import Usersposts from './components/Usersposts'
+
 export const registerContext=createContext()
 
 
 function App() {
   const [token, settoken] = useState(localStorage.getItem('token')|| '')
 const [loggedin, setloggedin] = useState(false)
-const [firstName,setfirstName1]= useState("")
-
+const [firstName1,setfirstName1]= useState("")
+console.log(firstName1)
 const [posts, setposts] = useState([])
 //const [currentImageNumber, setcurrentImageNumber] = useState([])
 useEffect(()=>{
@@ -51,7 +53,7 @@ const adminPaths = ['/admin/signin', '/admin/dashbored', '/admin/createpost',"/U
   return (
     <>
      
-    <registerContext.Provider value={{token,settoken,loggedin,setloggedin,firstName,setfirstName1,posts,setposts}}>
+    <registerContext.Provider value={{token,settoken,loggedin,setloggedin,firstName1,setfirstName1,posts,setposts}}>
     {!adminPaths.includes(location.pathname) && <Navbar />}
     <Routes>
     <Route path="/admin/signin" element={<AdminSignIn/>}/>
@@ -59,7 +61,7 @@ const adminPaths = ['/admin/signin', '/admin/dashbored', '/admin/createpost',"/U
     <Route path="/admin/createpost" element={<adminPosts/>}/>
 
     <Route path="/posts/:carName" element={<CarsCategory/>}/>
-
+    <Route path="/my-posts" element={<Usersposts/>}/>
     <Route path="/" element={<HomePage/>}/>
     <Route path="/Shopping" element={<CarsforSale/>}/>
     <Route path="/New-cars" element={<NewCars/>}/>
