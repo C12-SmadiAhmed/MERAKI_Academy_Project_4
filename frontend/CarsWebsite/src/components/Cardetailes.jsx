@@ -1,11 +1,13 @@
-import React, { useContext , useState ,useEffect} from 'react';
-import { useParams } from 'react-router-dom'
+  import React, { useContext , useState ,useEffect} from 'react';
+import { useNavigate, useParams,Link ,useLocation  } from 'react-router-dom'
 import { registerContext } from '../App';
 import axios from 'axios'
 import { TextField, Button, Box, Typography,IconButton } from '@mui/material'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
-
+import socketInit from './soket.server';
+import { SocketContext } from './SocketMessages';
+import SendSocketmessages from './SendSocketmessages';
 
 
 const CarDetails = () => {
@@ -16,22 +18,29 @@ const [lastName, setlastName] = useState("")
 const [email , setemail]= useState("")
 const[phoneNumber,setphoneNumber]=useState(0)
 const [message , setmessage]= useState("")
+const [chatmessages, setchatmessages] = useState([])
+const [isChatOpen, setIsChatOpen] = useState(false)
 const {token}=useContext(registerContext)
 
+const navigate=useNavigate()
+const socket=useContext(SocketContext)
+console.log(socket)
+
 const userId= token ? JSON.parse(atob(token.split('.')[1])).userId : null ; //id for the customer
+
 
     const { id } = useParams(); 
     console.log(id)
     const car = posts.find(car => car._id === id); // 
     console.log(car)
-    if (!car) {
+    if (!car) { 
       return <h2>Car not found</h2>;
     }
   
     const totalImages = car.carImage.length;
     console.log(totalImages)
     
-    
+    const filterdNumbers=(car.price).toLocaleString()
 
     const nextImage = () => {
         setCurrentImageIndex((prevIndex) => (prevIndex + 1) % totalImages);
@@ -46,6 +55,13 @@ const userId= token ? JSON.parse(atob(token.split('.')[1])).userId : null ; //id
       console.log("userid",userId)
       console.log("carid",car._id)
       
+const backButton=()=>{
+  navigate(-1)
+}
+
+
+
+ 
 
 const sendButton=()=>{
   console.log("sned button clicked")
@@ -79,19 +95,20 @@ axios.post("http://localhost:5000/messages/", body ,
   console.log(result.status)
   if (result.status===201){
    console.log("message sent to seller")};
-}).catch((err)=>{
+}).catch((err)=>{ 
   console.log(err)
-})
-
-
-
-}
-
+})}
+//-----------------------------------------------------------------------------------
 
 
 
       return (
         <>
+   {/*       <Link to={`/socket-messages/${car.author._id}`}>
+    Chat with the seller
+</Link>  */}
+  
+
         <div className='top-cardetailes-page'>
  <div className='car-descrption-image'> 
         <img
@@ -109,7 +126,7 @@ axios.post("http://localhost:5000/messages/", body ,
 
 
 <div className='right-hald-top-page'>
-<h2>Contact seller</h2> 
+<h2>Contact seller via Email</h2> 
  <div className='namesinput'>
  
 <input className="contact-Seller-inputs" onChange={(e)=>{setfirstName(e.target.value)}}  placeholder='Fist name'/>
@@ -124,16 +141,33 @@ axios.post("http://localhost:5000/messages/", body ,
 </div>
 
 <button className='submit-the-message' onClick={sendButton}>Send</button>
+<Button sx={{ fontSize: '1.3rem' }} onClick={() => setIsChatOpen(true)}>Chat with the seller</Button>
+{isChatOpen && (
+                <SendSocketmessages 
+                    socket={socket} 
+                    user_id={userId} 
+                    seller_id={car.author._id} 
+                    onClose={() => setIsChatOpen(false)} 
+                />
+            )}
+
 </div>
 </div>
+
+
+
+
+
+
 
         <div className='cardetailsmain'>
         <div className='car-details-page'>
 
-
-           <h2> {car.carCondtion}</h2>
-         <h2>{car.model} {car.made}</h2>
-        <h2>Price: ${car.price}</h2>
+<div className='car-detailes'>
+     <h2 className='car-condition'> {car.carCondtion}</h2>
+     <h2 className='car-made'>{car.model} {car.made}</h2>
+     <h2 className='car-price'>Price: {filterdNumbers} JOD</h2>
+     </div>
           <br/>
           <h1>Basics</h1>
           <span className='feature'> <span className='label'>Exterior Color</span>
@@ -195,12 +229,20 @@ axios.post("http://localhost:5000/messages/", body ,
          
           <div className='contact-seller'>
  
- 
+          <h1>Seller Details</h1>
 <span className='feature'>
-  <span className='label'>Seller detailes</span>
-    <span className='value'>{car.author} </span>
+  <span className='label'>Seller Name</span>
+    <span className='value'>{car.author.firstName} {car.author.lastName} </span>
 </span>
 <span className='border'></span>
+
+<span className='feature'>
+  <span className='label'>Seller Email</span>
+    <span className='value'>{car.author.email}  </span>
+</span>
+<span className='border'></span>
+
+
 
 <span className='feature'>
   <span className='label'>Car location</span>
@@ -217,8 +259,10 @@ axios.post("http://localhost:5000/messages/", body ,
 
 </div>
           </div>
+   <button className="Back-button" onClick={backButton}></button>
         </>
       );
     };
   
-  export default CarDetails;
+  export default CarDetails; 
+ 

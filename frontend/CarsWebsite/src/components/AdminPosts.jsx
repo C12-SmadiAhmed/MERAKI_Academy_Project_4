@@ -1,8 +1,8 @@
 
 import React , {useState} from 'react'
 import axios from 'axios' 
-
-const adminPosts = () => {
+import { useNavigate } from 'react-router-dom'
+const AdminPosts = () => {
     const [carCondtion, setcarCondtion] = useState("")
     const [made, setmade] = useState("")
     const [model, setmodel] = useState(0)
@@ -27,7 +27,7 @@ const adminPosts = () => {
     const [newConvenience, setNewConvenience] = useState("");
     const [newEntertainment, setNewEntertainment] = useState("");
     const [newSafety, setNewSafety] = useState("");
-    
+    const navigite=useNavigate()
     const addConvenience = () => {
       if (newConvenience) {
         setConvenience([...Convenience, newConvenience]);
@@ -51,6 +51,9 @@ const adminPosts = () => {
     
     
     
+    const backButton=()=>{
+      navigite(-1)
+    }
     
     
     
@@ -301,11 +304,11 @@ const adminPosts = () => {
 
 <button className='SalesInputs'  onClick={SubmitButton}>Submit</button>
  </div>
-
+<button className='Back-button' onClick={backButton}>Back</button>
     </div>
     
     
   )
 }
 
-export default adminPosts
+export default AdminPosts

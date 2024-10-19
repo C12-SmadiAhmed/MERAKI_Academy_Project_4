@@ -11,8 +11,6 @@ const {token}=useContext(registerContext)
 const navigite=useNavigate()
 const createPosts=()=>{
 navigite("/admin/createpost")
-
-
 }
 
 
@@ -51,24 +49,23 @@ setnumberofposts(result.data.Numberofposts)
     },[]) 
 
   return (
-    <>
-    <h1>Admin Dashbored</h1> 
-    <div className='admindashbored'>
-  <div className='informtion-for-admin'> 
-<h2>Number of Posts made on the webiste: {numberofposts}</h2>
-<h2>Number of Users registerd on the webiste: {numberofusers}</h2>
-</div>   
-
-<div className='Adminposts'>
- <button onClick={createPosts}>Create New Posts</button>       
- <button onClick={()=>{navigite("/Userinfo")}}>Users informtion</button> 
- <button onClick={()=>{navigite("/UserPosts")}}>Check User Posts</button> 
-</div>
-
-
-    </div> 
-    </>
-  )
-}
+    <div className='admin-dashboard'>
+    <h1>Admin Dashboard</h1>
+    <div className='info-container'>
+      <div className='info-card'>
+        <h2>Number of Users Registered:</h2>
+        <p>{numberofusers}</p>
+        <button className='admin-buttons' onClick={() => navigite("/Userinfo")}>View User Info</button>
+      </div>
+      <div className='info-card'>
+        <h2>Number of Posts Made:</h2>
+        <p>{numberofposts}</p>
+        <button className='admin-buttons' onClick={() => navigite("/UserPosts")}>Check User Posts</button>
+      </div>
+    </div>
+    <button className='create-post-button' onClick={createPosts}>Create New Post</button>
+  </div>
+);
+};
 
 export default AdminDashbored 

@@ -1,12 +1,16 @@
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { registerContext } from "../App";
-
+import ReceiveSocketMessages from "./ReciveSocket";
+import { TextField, Button, Box, Typography,IconButton } from '@mui/material'
+import { SocketContext } from "./SocketMessages";
 const SellerMessages = () => {
+  const socket=useContext(SocketContext)
   const { token } = useContext(registerContext);
   const [messages, setMessages] = useState([]);
   const [reply, setreply] = useState("")
   const [replyto, setreplyto] = useState(null)
+  const [isChatOpen, setIsChatOpen] = useState(false)
   const [notification, setNotification] = useState("")
   const sellerId = token ? JSON.parse(atob(token.split(".")[1])).userId : null;
 
@@ -69,9 +73,21 @@ axios.post("http://localhost:5000/messages/reply", body ,
   return (
     <div className="messages-page">
     <h2>Your Messages</h2>
+    <Button sx={{ fontSize: '1.3rem' }} onClick={() => setIsChatOpen(true)}>Chat with the cusotmer</Button>
+{isChatOpen && (
+                <ReceiveSocketMessages 
+                  
+                    onClose={() => setIsChatOpen(false)} 
+                />
+            )}
+  
     {notification && <div className="notification">{notification}</div>}
+  
+    
     {messages.length === 0 ? (
       <p>No messages received.</p>
+      
+      
     ) : (
       <ul>
         {messages.map((msg) => (
@@ -116,11 +132,14 @@ axios.post("http://localhost:5000/messages/reply", body ,
                 <button id="sendreply" onClick={replybutton}>Send Reply</button>
               </div>
             )}
+       
           </div>
         ))}
       </ul>
     )}
+  
   </div>
+  
 );
 };
 

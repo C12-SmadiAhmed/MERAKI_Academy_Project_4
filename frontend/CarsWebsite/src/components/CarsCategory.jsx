@@ -15,6 +15,7 @@ const navigate=useNavigate()
       console.log(res)
       if (Array.isArray(res.data.post)) {
         setposts(res.data.post);
+        setcurrentImageNumber(Array(res.data.post.length).fill(5))
     } else {
         navigate("/Shopping")
     }

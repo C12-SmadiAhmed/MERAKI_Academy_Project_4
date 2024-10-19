@@ -15,7 +15,9 @@ const [currentImageNumber, setcurrentImageNumber] = useState([])
 const [minPrice, setMinPrice] = useState(0);
 const [maxPrice, setMaxPrice] = useState(1000000)
 const [searchTerm, setSearchTerm] = useState("")
+const [isFilterApplied, setIsFilterApplied] = useState(false)
 
+const navigate= useNavigate()
 
 
 useEffect(()=>{
@@ -63,14 +65,16 @@ const handleSearchChange = (e) => {
 const filterPosts = () => {
   return posts.filter(post => {
     const price = parseFloat(post.price);
-    const matchesprice= price >= minPrice && price <= maxPrice;
+    const matchesprice= isFilterApplied ? (price >= minPrice && price <= maxPrice):true
     const matchessearch = post.made.toLowerCase().includes(searchTerm.toLowerCase()) || post.model.toString().includes(searchTerm);
     return matchesprice && matchessearch
   });
 };
 
 const filteredPosts = filterPosts()
-
+const backButton=()=>{
+  navigate(-1)
+}
 
 const nextImage = (index) => {
   setcurrentImageNumber((prev) => {
@@ -89,6 +93,7 @@ const prevImage = (index) => {
 };
 
 return (
+  <>
   <div className='cars-for-sale-page'>
     <h2>Cars for Sale</h2>
 
@@ -136,7 +141,7 @@ return (
         <Button 
           variant="contained" 
           color="primary" 
-          onClick={() => {}}
+          onClick={() => {setIsFilterApplied(true)}}
         >
           Apply Filter
         </Button>
@@ -180,17 +185,19 @@ return (
             </div>
             <div className='car-details'>
             
-              <h3>{elem.carCondtion}</h3>
-              <Link to={`/Car-Details/${elem._id}`}>
+              <h3 className='car-condition'>{elem.carCondtion}</h3>
+              <Link to={`/Car-Details/${elem._id}`} className='car-model'>
               <h3>{elem.model} {elem.made}</h3></Link>
               {}
-              <h3>{filterdNumbers} JOD</h3>
+              <h3 className='car-price'>{filterdNumbers} JOD</h3>
             </div>
           </div>
         );
       })}
     </div>
   </div>
+  <button className="Back-button" onClick={backButton}></button>
+  </>
 );
 }
 

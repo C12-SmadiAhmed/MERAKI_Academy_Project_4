@@ -10,14 +10,14 @@ import { Menu, MenuItem, Button } from '@mui/material';
 const Navbar = () => {
 const {token ,firstName1,settoken,setloggedin }=useContext(registerContext)
 const navagite=useNavigate()
-const [dropdown, setdropdown] = useState(null);
+const [dropdown, setdropdown] = useState(false);
 
 const isMenuOpen = (event) => {
   setdropdown(event.currentTarget);
 };
 
 const isMenuClosed = () => {
-  setdropdown(null);
+  setdropdown(false);
 };
 
 

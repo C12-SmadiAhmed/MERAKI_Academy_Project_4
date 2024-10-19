@@ -6,7 +6,7 @@ import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { useNavigate } from 'react-router-dom'
-
+import Footer from './Footer'
 
 
 const carsimage=[
@@ -29,8 +29,8 @@ const settings = {
   speed: 500, 
   slidesToShow: 1, 
   slidesToScroll: 1, 
- // autoplay: true,          
-    //autoplaySpeed: 5000, 
+  autoplay: true,          
+    autoplaySpeed: 5000, 
 };
 const showpostforCategory = (carName) => {
   navigate(`/posts/${carName}`); 
@@ -52,7 +52,9 @@ const showCategory=(category)=>{
   
   }) 
 }
-
+useEffect(() => {
+  showCategory('Electric');
+}, []);
 
 
 
@@ -90,6 +92,8 @@ const showCategory=(category)=>{
 </div>
 ))}
  </div>
+ <Footer/>
+
   </>
     )}
                 

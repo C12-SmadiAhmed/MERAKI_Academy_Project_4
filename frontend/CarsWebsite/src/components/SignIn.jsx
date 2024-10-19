@@ -11,8 +11,31 @@ const navgite=useNavigate()
 const {settoken , setloggedin}=useContext(registerContext)
 const [password , setpassword]= useState("")
 const [email , setemail]= useState("")
+const [error, setError] = useState({});
+const [successMessage, setSuccessMessage] = useState("")
 
 const loginButton=()=>{
+  console.log("Login button clicked")
+  const newError = {};
+
+  if (!email) newError.email = "Email is required.";
+  if (!password) newError.password = "Password is required.";
+
+  
+  if (Object.keys(newError).length) {
+    setError(newError);
+    return;
+  }
+
+  setError({});
+
+
+
+
+
+
+
+
 setpassword(password)
 setemail(email)
 
@@ -26,24 +49,17 @@ axios.post("http://localhost:5000/users/login", body ,).then((result)=>{
   localStorage.setItem("token",token)
   settoken(token)
   setloggedin(true)
-  navgite("/")
-  onClose()
+  setSuccessMessage("Login successful! Redirecting to Homepage...");
+  setTimeout(() => navgite("/"), 2000); 
+  
 
 }).catch((err)=>{
   console.log(err)
+  setError({ api: "Login failed. Please try again." });
 })}
 
   return (
-  /*     <div>
-      <h3>SignIn</h3>
-      <input placeholder='Your Email' onChange={(e)=>{ setemail(e.target.value) }}></input>
-      <input placeholder='Your Password' onChange={(e)=>{ setpassword(e.target.value) }}></input>
-      <button onClick={loginButton}>Login</button>
-      <p>Dont have an account?</p>
-      <button onClick={()=>{
-        navgite("/Register")
-      }}>Create account</button>
-    </div> */  
+    
     <Container component="main" maxWidth="md" className="login-container">
     <Card className="login-card"> 
       <Grid container>
@@ -56,22 +72,26 @@ axios.post("http://localhost:5000/users/login", body ,).then((result)=>{
               Login to Your Account
             </Typography>
             <TextField
-              label="Email Address"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              value={email}
-              onChange={(e) => setemail(e.target.value)}
-            />
-            <TextField
-              label="Password"
-              variant="outlined"
-              type="password"
-              fullWidth
-              margin="normal"
-              value={password}
-              onChange={(e) => setpassword(e.target.value)}
-            />
+                  label="Email Address"
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  value={email}
+                  onChange={(e) => setemail(e.target.value)}
+                  error={!!error.email}
+                  helperText={error.email}
+                />
+           <TextField
+                  label="Password"
+                  variant="outlined"
+                  type="password"
+                  fullWidth
+                  margin="normal"
+                  value={password}
+                  onChange={(e) => setpassword(e.target.value)}
+                  error={!!error.password}
+                  helperText={error.password}
+                />
             <Button
               variant="contained"
               color="primary"
@@ -81,6 +101,11 @@ axios.post("http://localhost:5000/users/login", body ,).then((result)=>{
             >
               Login
             </Button>
+            {successMessage && (
+                  <Typography variant="body2" color="green" style={{ marginTop: '10px' }}>
+                    {successMessage}
+                  </Typography>
+                )}
             <p>Dont have an account?</p>
       <Button onClick={()=>{
         navgite("/Register")

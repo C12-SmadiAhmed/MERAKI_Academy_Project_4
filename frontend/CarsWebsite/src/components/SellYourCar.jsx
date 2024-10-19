@@ -2,6 +2,7 @@ import axios from 'axios'
 import React , {useState} from 'react'
 import { FaFaceGrinWink } from "react-icons/fa6"
 import sellyourcarimage from "../assets/sellyourcar.jpg"
+import { useNavigate } from 'react-router-dom'
 
 const SellYourCar = () => {
 const [carCondtion, setcarCondtion] = useState("")
@@ -24,7 +25,9 @@ const [location, setlocation] = useState("")
 const [sellersNote, setsellersNote] = useState("")
 const [carImage, setcarImage] = useState([])
 const [error, seterror] = useState({})
+const [successMessage, setSuccessMessage] = useState("")
 
+const navagate=useNavigate()
 //--------
 const [newConvenience, setNewConvenience] = useState("");
 const [newEntertainment, setNewEntertainment] = useState("");
@@ -86,6 +89,7 @@ const token =localStorage.getItem('token')
 
 const userId= token ? JSON.parse(atob(token.split('.')[1])).userId : null ; 
 
+const navigite=useNavigate()
 
 
 const handleFileUpload = (e) => {
@@ -98,6 +102,7 @@ const handleFileUpload = (e) => {
     return axios.post('https://api.cloudinary.com/v1_1/du9togbq9/image/upload', formData)
       .then(response => {
         console.log('image is uploaded:', response.data);
+      
         return response.data.secure_url; 
       })
       .catch(error => {
@@ -177,6 +182,10 @@ axios.post("http://localhost:5000/posts/createpost"
   console.log(result.status)
   if (result.status===201){
     console.log("done")
+    setSuccessMessage("Your post has been successful! Redirecting to the homepage...");
+        setTimeout(() => {
+          navigite("/"); 
+        }, 2000)
   };
 }).catch((err)=>{
   console.log(err)
@@ -303,6 +312,11 @@ axios.post("http://localhost:5000/posts/createpost"
 
   <input className='SalesInputs'  placeholder='Seller sNote' onChange={(e)=>{setsellersNote(e.target.value)}}/>
   {error.sellersNote && <span style={{ margintop: '5px' ,fontSize: '15px', color: 'red' }}>{error.sellersNote}</span>}
+  {successMessage && (
+            <span style={{ marginTop: '10px', fontSize: '16px', color: 'green' }}>
+              {successMessage}
+            </span>
+          )}
 
 <button className='SalesInputs'  onClick={SubmitButton}>Submit</button>
  </div>
